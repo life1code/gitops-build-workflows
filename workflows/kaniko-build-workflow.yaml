@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: kaniko-build-
+  namespace: argo
+spec:
+  serviceAccountName: build-sa
+  entrypoint: kaniko-build
+  volumes:
+  - name: kaniko-secret
+    secret:
+      secretName: regcred
+  templates:
+  - name: kaniko-build
+    container:
+      image: gcr.io/kaniko-project/executor:latest
+      command:
+        - /kaniko/executor
+      args:
+        - --dockerfile=/workspace/Dockerfile
+        - --context=git://github.com/life1code/gitops-build-workflows.git#refs/heads/main
+        - --destination=registry.example.com/your-org/your-app:latest
+        - --cache=true
+      volumeMounts:
+        - name: kaniko-secret
+          mountPath: /kaniko/.docker
+
