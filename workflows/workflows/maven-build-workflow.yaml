@@ -1,10 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: maven-build
+  namespace: argo
 spec:
   serviceAccountName: build-sa
   entrypoint: maven-build
-  volumes:
-    - name: shared-data
-      emptyDir: {}
-
   templates:
   - name: maven-build
     steps:
@@ -19,9 +20,6 @@ spec:
     container:
       image: alpine/git:latest
       command: ["git", "clone", "https://github.com/life1code/gitops-build-workflows.git", "/src"]
-      volumeMounts:
-        - name: shared-data
-          mountPath: /src
 
   - name: maven-package
     container:
@@ -32,9 +30,6 @@ spec:
           cd /src
           mvn clean package -DskipTests
           cp target/*.jar /tmp/artifact.jar
-      volumeMounts:
-        - name: shared-data
-          mountPath: /src
 
   - name: upload-s3
     container:
@@ -53,3 +48,4 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         - aws s3 cp /tmp/artifact.jar s3://my-build-artifacts/your-app/{{workflow.uid}}/artifact.jar
+
