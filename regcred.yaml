@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2FwcC5kb2NrZXIuY29tL2FjY291bnRzLyI6eyJ1c2VybmFtZSI6InNtaWx5bGlmZTk5NiIsInBhc3N3b3JkIjoiZGNrcl9wYXRfTnplYkRxQkNnUDhKVzZCY0g0MmJCVDFiMGFNIiwiZW1haWwiOiJzbWlseWxpZmU5OTZjaGFAZ21haWwuY29tIiwiYXV0aCI6ImMyMXBiSGxzYVdabE9UazJPbVJqYTNKZmNHRjBYMDU2WldKRWNVSkRaMUE0U2xjMlFtTklOREppUWxReFlqQmhUUT09In19fQ==
+kind: Secret
+metadata:
+  name: regcred
+  namespace: argo
+type: kubernetes.io/dockerconfigjson

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: maven-build-
+  name: maven-build
   namespace: argo
 spec:
   serviceAccountName: build-sa
