@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: kaniko-build-
+spec:
+  entrypoint: build
+  templates:
+    - name: build
+      container:
+        image: gcr.io/kaniko-project/executor:latest
+        args:
+          - "--dockerfile=/workspace/Dockerfile"
+          - "--context=dir:///workspace"
+          - "--destination=localhost:5005/myapp:latest"
+      volumeMounts:
+        - name: kaniko-secret
+          mountPath: /secret
+    volumes:
+      - name: kaniko-secret
+        secret:
+          secretName: docker-creds
+

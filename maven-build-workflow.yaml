@@ -1,0 +1,52 @@
+# workflows/maven-build-workflow.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: maven-build-
+  namespace: argo
+spec:
+  serviceAccountName: build-sa
+  entrypoint: maven-build
+  templates:
+  - name: maven-build
+    steps:
+    - - name: clone
+        template: git-clone
+    - - name: mvn-package
+        template: maven-package
+    - - name: upload-s3
+        template: upload-s3
+  - name: git-clone
+    script:
+      image: alpine/git:latest
+      command: [sh, -c]
+      source: |
+        git clone https://github.com/your-org/your-app.git repo
+  - name: maven-package
+    script:
+      image: maven:3.8.4-openjdk-17
+      command: [sh, -c]
+      source: |
+        cd repo
+        mvn -B clean package -DskipTests
+        ls -l target
+        cp target/your-app-*.jar /tmp/artifact.jar
+      volumeMounts: []
+  - name: upload-s3
+    script:
+      image: amazon/aws-cli:2.12.0
+      env:
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: s3-credentials
+            key: access_key
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: s3-credentials
+            key: secret_key
+      command: [sh, -c]
+      source: |
+        aws s3 cp /tmp/artifact.jar s3://my-build-artifacts/your-app/{{workflow.uid}}/your-app.jar
+
