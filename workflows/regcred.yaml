@@ -1,10 +1,6 @@
 apiVersion: v1
 data:
-<<<<<<< HEAD
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2FwcC5kb2NrZXIuY29tL2FjY291bnRzLyI6eyJ1c2VybmFtZSI6InNtaWx5bGlmZTk5NiIsInBhc3N3b3JkIjoiZGNrcl9wYXRfTnplYkRxQkNnUDhKVzZCY0g0MmJCVDFiMGFNIiwiZW1haWwiOiJzbWlseWxpZmU5OTZjaGFAZ21haWwuY29tIiwiYXV0aCI6ImMyMXBiSGxzYVdabE9UazJPbVJqYTNKZmNHRjBYMDU2WldKRWNVSkRaMUE0U2xjMlFtTklOREppUWxReFlqQmhUUT09In19fQ==
-=======
   .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOnsidXNlcm5hbWUiOiJzbWlseWxpZmU5OTYiLCJwYXNzd29yZCI6ImRja3JfcGF0X056ZWJEcUJDZ1A4Slc2QmNINDJiQlQxYjBhTSIsImVtYWlsIjoic21pbHlsaWZlOTk2Y2hhQGdtYWlsLmNvbSIsImF1dGgiOiJjMjFwYkhsc2FXWmxPVGsyT21SamEzSmZjR0YwWDA1NlpXSkVjVUpEWjFBNFNsYzJRbU5JTkRKaVFsUXhZakJoVFE9PSJ9fX0=
->>>>>>> 43bfd9e (Initial commit)
 kind: Secret
 metadata:
   name: regcred
